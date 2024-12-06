@@ -1,15 +1,24 @@
 package com.project;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
 
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
-
+@Entity
+@Table(name = "ciutadans")
 public class Ciutada implements Serializable{
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="ciutadaId", unique=true, nullable=false)
 
     private long ciutadaId;
-    private Ciutat ciutat;
+
     private String nom, cognom;
     private Integer edat;
+    
+    @ManyToOne
+    @JoinColumn(name="ciutatId")
+    private Ciutat ciutat;
+
 
     public Ciutada(){}
 

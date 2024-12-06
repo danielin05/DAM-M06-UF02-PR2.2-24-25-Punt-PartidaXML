@@ -1,27 +1,33 @@
 package com.project;
 
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
+@Entity
+@Table(name = "ciutats")
 
 public class Ciutat implements Serializable{
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="ciutatId", unique=true, nullable=false)
+
     private long ciutatId;
     private String nom, pais;
     private Integer poblacio;
 
+    @OneToMany(mappedBy = "ciutat", 
+    fetch = FetchType.EAGER)
     private Set<Ciutada> ciutadans = new HashSet<>();
 
-    public Ciutat(){}
+    public Ciutat() {}
 
     public Ciutat(String nom, String pais, Integer poblacio) {
-        
         this.nom = nom;
         this.pais = pais;
         this.poblacio = poblacio;
     }
-
 
     public long getCiutatId() {
         return ciutatId;
@@ -29,14 +35,6 @@ public class Ciutat implements Serializable{
 
     public void setCiutatId(long ciutatId) {
         this.ciutatId = ciutatId;
-    }
-        
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     public String getNom() {
@@ -46,6 +44,14 @@ public class Ciutat implements Serializable{
     public void setNom(String nom) {
         this.nom = nom;
     }
+    
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
 
     public Integer getPoblacio() {
         return poblacio;
@@ -54,11 +60,10 @@ public class Ciutat implements Serializable{
     public void setPoblacio(Integer poblacio) {
         this.poblacio = poblacio;
     }
-    
+
     public Set<Ciutada> getCiutadans() {
         return ciutadans;
     }
-
 
     public void setCiutadans(Set<Ciutada> ciutadans) {
         if (ciutadans != null) {
@@ -102,5 +107,4 @@ public class Ciutat implements Serializable{
     public int hashCode() {
         return Long.hashCode(ciutatId);
     }  
-
 }
